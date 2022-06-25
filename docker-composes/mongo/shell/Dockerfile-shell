@@ -6,14 +6,14 @@ RUN apt-get install -y jq; apt-get install -y bsdmainutils
 # install mongosh
 RUN curl https://downloads.mongodb.com/compass/mongodb-mongosh_1.0.0_amd64.deb -o mongosh.deb && \
     dpkg --install mongosh.deb
-COPY dockerfiles/shell/tutorial-scripts/initialize-container.sh /
+COPY shell/tutorial-scripts/initialize-container.sh /
 RUN chmod +x initialize-container.sh
 
 # Modify command prompt
 RUN echo 'PS1="\[\e[32m\][\e[mMongoDB Kafka Connector Tutorial\e[32m]\e[m : "' >> ~/.bashrc
 
 # Add welcome text
-COPY dockerfiles/shell/greeting.sh shell/tutorial-scripts/status.sh /
+COPY shell/greeting.sh shell/tutorial-scripts/status.sh /
 RUN chmod +x status.sh
 RUN cat greeting.sh >> ~/.bashrc
 
