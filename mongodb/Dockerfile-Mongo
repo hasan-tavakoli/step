@@ -1,5 +1,5 @@
 FROM mongo:latest
-COPY mongodb/config-replica.js mongodb/config-data.js /
+COPY dockerfiles/mongodb/config-replica.js dockerfiles/mongodb/config-data.js /
 COPY data/data.zip data.zip
 RUN apt update && apt install -y zip
 RUN unzip data.zip
