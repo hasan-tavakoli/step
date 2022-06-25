@@ -85,7 +85,7 @@ services:
       [
         "bash",
         "-c",
-        "sleep 10 && mongo --host mongodb://mongo1:27017 config-replica.js && sleep 10 && mongo --host mongodb://mongo1:27017 config-data.js",
+        "sleep 10 && mongo --host mongodb://mongo1:27017 config-replica.js && sleep 10 && mongo --host mongodb://mongo1:27017 config-data.js && mongoimport --host mongo1 --db mydb --collection user --type json --file /user.json --jsonArray && mongoimport --host mongo1 --db mydb --collection step --type json --file /step.json --jsonArray && mongoimport --host mongo1 --db mydb --collection bloodpressure --type json --file /bloodpressure.json --jsonArray",
       ]
     restart: "no"
 
