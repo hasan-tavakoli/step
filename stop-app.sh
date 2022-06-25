@@ -1,1 +1,3 @@
-docker-compose -p quickstart down --rmi 'all'
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi $(docker images -aq)
