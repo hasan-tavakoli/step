@@ -61,6 +61,8 @@ services:
       context: .
       dockerfile: mongodb/ Dockerfile-Mongo
     command: --replSet rs0
+    volumes:                                                                                               
+            - /data/db:/data/db 
     restart: always
 
   mongo1-setup:
