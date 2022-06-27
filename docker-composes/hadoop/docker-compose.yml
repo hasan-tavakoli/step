@@ -29,25 +29,25 @@ services:
     env_file:
       - hadoop.env
 
-  resourcemanager:
-    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-    container_name: resourcemanager
-    hostname: resourcemanager
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
-    env_file:
-      - hadoop.env
+#   resourcemanager:
+#     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+#     container_name: resourcemanager
+#     hostname: resourcemanager
+#     restart: always
+#     environment:
+#       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+#     env_file:
+#       - hadoop.env
 
-  nodemanager1:
-    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
-    container_name: nodemanager
-    hostname: nodemanager
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
-    env_file:
-      - hadoop.env
+#   nodemanager1:
+#     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+#     container_name: nodemanager
+#     hostname: nodemanager
+#     restart: always
+#     environment:
+#       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+#     env_file:
+#       - hadoop.env
 
   historyserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
@@ -96,23 +96,23 @@ services:
       MYSQL_DATABASE: metastore
       MYSQL_USER: hive
       MYSQL_PASSWORD: hive
-  presto:
-    image: kadensungbincho/ranger-presto:presto344-ranger2.1.0
-    container_name: presto
-    hostname: presto
-    volumes:
-      - ./presto/etc/catalog:/usr/lib/presto/etc/catalog
-      - ./presto/etc/config.properties:/usr/lib/presto/etc/config.properties
-      - ./presto/etc/jvm.config:/usr/lib/presto/etc/jvm.config
-      - ./presto/etc/log.properties:/usr/lib/presto/etc/log.properties
-      - ./presto/etc/node.properties:/usr/lib/presto/etc/node.properties
-      - ./presto/install.properties:/usr/lib/presto/ranger-presto-plugin/install.properties
-    environment:
-      SERVICE_PRECONDITION: "hive-metastore:9083"
-    ports:
-      - "8080:8080"
-  # https://cwiki.apache.org/confluence/display/KNOX/Dynamic+HA+Provider+Configuration
-  # https://community.cloudera.com/t5/Support-Questions/How-to-Enable-Zookeeper-Discovery-for-HiveServer2-HA/td-p/95392
+#   presto:
+#     image: kadensungbincho/ranger-presto:presto344-ranger2.1.0
+#     container_name: presto
+#     hostname: presto
+#     volumes:
+#       - ./presto/etc/catalog:/usr/lib/presto/etc/catalog
+#       - ./presto/etc/config.properties:/usr/lib/presto/etc/config.properties
+#       - ./presto/etc/jvm.config:/usr/lib/presto/etc/jvm.config
+#       - ./presto/etc/log.properties:/usr/lib/presto/etc/log.properties
+#       - ./presto/etc/node.properties:/usr/lib/presto/etc/node.properties
+#       - ./presto/install.properties:/usr/lib/presto/ranger-presto-plugin/install.properties
+#     environment:
+#       SERVICE_PRECONDITION: "hive-metastore:9083"
+#     ports:
+#       - "8080:8080"
+#   # https://cwiki.apache.org/confluence/display/KNOX/Dynamic+HA+Provider+Configuration
+#   # https://community.cloudera.com/t5/Support-Questions/How-to-Enable-Zookeeper-Discovery-for-HiveServer2-HA/td-p/95392
   zoo:
     image: zookeeper:3.4.14
     restart: always
