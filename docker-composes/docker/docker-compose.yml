@@ -102,16 +102,16 @@ services:
             - ../spark/app:/usr/local/spark/app # Spark scripts folder (Must be the same path in airflow and Spark Cluster)
             - ../spark/resources:/usr/local/spark/resources #Resources folder (Must be the same path in airflow and Spark Cluster)
 
- #Jupyter notebook
-    jupyter-spark:
-        image: jupyter/pyspark-notebook:spark-3.1.2
-        ports:
-          - "7777:8888"
-          - "4040-4080:4040-4080"
-        volumes:
-          - ../notebooks:/home/jovyan/work/notebooks/
-          - ../spark/resources/data:/home/jovyan/work/data/
-          - ../spark/resources/jars:/home/jovyan/work/jars/
+#  #Jupyter notebook
+#     jupyter-spark:
+#         image: jupyter/pyspark-notebook:spark-3.1.2
+#         ports:
+#           - "7777:8888"
+#           - "4040-4080:4040-4080"
+#         volumes:
+#           - ../notebooks:/home/jovyan/work/notebooks/
+#           - ../spark/resources/data:/home/jovyan/work/data/
+#           - ../spark/resources/jars:/home/jovyan/work/jars/
 networks:
   default:
     external:
