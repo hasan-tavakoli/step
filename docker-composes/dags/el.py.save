@@ -17,7 +17,7 @@ def processo_etl_spark():
         .getOrCreate()
 
     data = spark.read.format("com.mongodb.spark.sql.DefaultSource").option("spark.mongodb.input.uri","mongodb://mongo1:27017/mydb.step?authSource=admin").load()
-    data.write.format("parquet").save("hdfs://nanmenode:9000/hasan_t")
+    data.write.format("parquet").save("hdfs://nanmenode:9000/")
     print("finish")
 
 default_args = {
