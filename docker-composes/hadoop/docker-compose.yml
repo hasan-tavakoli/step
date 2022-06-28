@@ -96,29 +96,30 @@ services:
       MYSQL_DATABASE: metastore
       MYSQL_USER: hive
       MYSQL_PASSWORD: hive
-#   presto:
-#     image: kadensungbincho/ranger-presto:presto344-ranger2.1.0
-#     container_name: presto
-#     hostname: presto
-#     volumes:
-#       - ./presto/etc/catalog:/usr/lib/presto/etc/catalog
-#       - ./presto/etc/config.properties:/usr/lib/presto/etc/config.properties
-#       - ./presto/etc/jvm.config:/usr/lib/presto/etc/jvm.config
-#       - ./presto/etc/log.properties:/usr/lib/presto/etc/log.properties
-#       - ./presto/etc/node.properties:/usr/lib/presto/etc/node.properties
-#       - ./presto/install.properties:/usr/lib/presto/ranger-presto-plugin/install.properties
-#     environment:
-#       SERVICE_PRECONDITION: "hive-metastore:9083"
-#     ports:
-#       - "8080:8080"
-#   # https://cwiki.apache.org/confluence/display/KNOX/Dynamic+HA+Provider+Configuration
-#   # https://community.cloudera.com/t5/Support-Questions/How-to-Enable-Zookeeper-Discovery-for-HiveServer2-HA/td-p/95392
+  presto:
+    image: kadensungbincho/ranger-presto:presto344-ranger2.1.0
+    container_name: presto
+    hostname: presto
+    volumes:
+      - ./presto/etc/catalog:/usr/lib/presto/etc/catalog
+      - ./presto/etc/config.properties:/usr/lib/presto/etc/config.properties
+      - ./presto/etc/jvm.config:/usr/lib/presto/etc/jvm.config
+      - ./presto/etc/log.properties:/usr/lib/presto/etc/log.properties
+      - ./presto/etc/node.properties:/usr/lib/presto/etc/node.properties
+      - ./presto/install.properties:/usr/lib/presto/ranger-presto-plugin/install.properties
+    environment:
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+    ports:
+      - "8080:8080"
+  # https://cwiki.apache.org/confluence/display/KNOX/Dynamic+HA+Provider+Configuration
+  # https://community.cloudera.com/t5/Support-Questions/How-to-Enable-Zookeeper-Discovery-for-HiveServer2-HA/td-p/95392
   zoo:
     image: zookeeper:3.4.14
     restart: always
     hostname: zookeeper
     ports:
       - 2181:2181
+
 volumes:
   hadoop_namenode:
   hadoop_datanode:
