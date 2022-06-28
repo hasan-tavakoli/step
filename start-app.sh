@@ -6,6 +6,12 @@ rm db_data.zip
 docker-compose up -d --build
 
 cd ../hadoop
+unzip hadoop_historyserver.zip
+rm hadoop_historyserver.zip
+unzip hadoop_datanode.zip
+rm hadoop_datanode.zip
+unzip hadoop_namenode.zip
+rm hadoop_namenode.zip
 docker-compose up -d --build
 
 cd ../mongo
