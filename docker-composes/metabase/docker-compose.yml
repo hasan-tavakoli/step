@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+    metabase:
+      volumes:
+      # setup your SQLITE db (optional)
+        - /PATH/TO/SQLITE/:/metabase
+        - ./metabase-data:/metabase-data
+      environment:
+        - MB_DB_FILE=/metabase-data/metabase.db
+        - MB_DB_TYPE=postgres
+        - MB_DB_DBNAME=airflow
+        - MB_DB_PORT=5432
+        - MB_DB_USER=airflow
+        - MB_DB_PASS=airflow
+        - MB_DB_HOST=postgres
+      ports:
+        - 3000:3000
+      image: metabase/metabase
+      restart: always
+     
+networks:
+  default:
+    external:
+      name: ranger-env
