@@ -63,11 +63,7 @@ def compress_to_Trusted_Dimuser(**kwargs):
     data.createOrReplaceTempView("user")
     datasql = spark.sql("select (_id.oid) as id,givenName,familyName,email from user")
 
-    datasql.withColumn("Curr_date", F.lit(datetime.now().strftime("%Y-%m-%d"))) \
-        .write \
-        .partitionBy("Curr_date") \
-        .mode("overwrite") \
-        .option("compression", "snappy") \
+    datasql.write.mode("overwrite").option("compression", "snappy")\
         .parquet("hdfs://namenode:9000//EDL_Data/Trusted_Data_Zone/user")
 # ---------------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------------
@@ -77,23 +73,19 @@ def compress_to_Trusted_bloodpressure(**kwargs):
     spark = create_spark_session("spark://spark:7077")
     data = read_from_hdfs(raw_dir, spark)
     data.createOrReplaceTempView("bloodpressure")
-    datasql = spark.sql("select userId,to_date(startDateTime) as startDateTime,"
-                        "(ragThreshold.BloodPressure.diastolicValue.color) as diastolicValue_color,"
-                        "(ragThreshold.BloodPressure.diastolicValue.direction) as diastolicValue_direction,"
-                        "(ragThreshold.BloodPressure.diastolicValue.isCustom) as diastolicValue_isCustom,"
-                        "(ragThreshold.BloodPressure.diastolicValue.severity) as diastolicValue_severity,"
-                        "(ragThreshold.BloodPressure.systolicValue.color) as systolicValue_color,"
-                        "(ragThreshold.BloodPressure.systolicValue.direction) as systolicValue_direction,"
-                        "(ragThreshold.BloodPressure.systolicValue.isCustom) as systolicValue_isCustom,"
-                        "(ragThreshold.BloodPressure.systolicValue.severity) as systolicValue_severity "
-                        "from bloodpressure")
+    datasql = spark.sql(
+        "select cast(startDateTime as String) ,(userId.oid) as userId, "
+        "ragThreshold.BloodPressure.diastolicValue.color as diastolicValue_color,"
+        "ragThreshold.BloodPressure.diastolicValue.direction as diastolicValue_direction,"
+        "cast(ragThreshold.BloodPressure.diastolicValue.isCustom as String) as diastolicValue_isCustom,"
+        "ragThreshold.BloodPressure.diastolicValue.severity as diastolicValue_severity,"
+        "ragThreshold.BloodPressure.systolicValue.color as systolicValue_color,"
+        "ragThreshold.BloodPressure.systolicValue.direction as systolicValue_direction,"
+        "cast(ragThreshold.BloodPressure.systolicValue.isCustom as string) as systolicValue_isCustom,"
+        "ragThreshold.BloodPressure.systolicValue.severity as systolicValue_severity from bloodpressure")
 
-    datasql\
-        .write \
-        .partitionBy("startDateTime") \
-        .mode("overwrite") \
-        .option("compression", "snappy") \
-        .parquet("hdfs://namenode:9000//EDL_Data/Trusted_Data_Zone/bloodpressure")
+    datasql.write.mode("overwrite").option("compression", "snappy").parquet(
+        "hdfs://namenode:9000//EDL_Data/Trusted_Data_Zone/bloodpressure")
 # ---------------------------------------------------------------------------------------
 
 def compress_to_Trusted_steps(**kwargs):
@@ -107,11 +99,9 @@ def compress_to_Trusted_steps(**kwargs):
     ).orderBy("week_strt_day")
 
     data.createOrReplaceTempView("steps")
-    datasql = spark.sql("select week_strt_day,oid as userId,stepsnum from steps")
+    datasql = spark.sql("select cast(week_strt_day as String) as week_strt_day,oid as userId,stepsnum from steps")
     datasql\
-        .write \
-        .partitionBy("week_strt_day") \
-        .mode("overwrite") \
+        .write.mode("overwrite") \
         .option("compression", "snappy") \
         .parquet("hdfs://namenode:9000//EDL_Data/Trusted_Data_Zone/steps")
 # ---------------------------------------------------------------------------------------

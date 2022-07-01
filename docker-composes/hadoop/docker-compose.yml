@@ -66,6 +66,7 @@ services:
     container_name: hive-server
     hostname: hive-server
     volumes:
+      - ./hive/sql.hql:/opt/sql.hql
       - ./hive/install.properties:/opt/ranger-hive-plugin/install.properties
     env_file:
       - ./hadoop.env
