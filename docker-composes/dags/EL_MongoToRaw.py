@@ -104,7 +104,7 @@ def compress_to_raw_user(**kwargs):
         print("check the data in MongoDB. It does'nt exist")
     # compress and partition data by createdate value
     data.createOrReplaceTempView ( "user" )
-    datasql=spark.sql("select _id,givenName,familyName,email from user")
+    datasql=spark.sql("select _id,givenName,familyName,email,gender,phoneNumber,dateOfBirth from user")
     datasql.withColumn("Curr_date", F.lit(datetime.now().strftime("%Y-%m-%d")))\
         .write\
         .partitionBy("Curr_date")\

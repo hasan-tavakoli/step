@@ -61,7 +61,7 @@ def compress_to_Trusted_Dimuser(**kwargs):
     data = read_from_hdfs(raw_dir, spark)
     # transfer
     data.createOrReplaceTempView("user")
-    datasql = spark.sql("select (_id.oid) as id,givenName,familyName,email from user")
+    datasql = spark.sql("select (_id.oid) as id,givenName,familyName,email,cast(gender as  String),cast(phoneNumber as String),cast(dateOfBirth as String) from user")
 
     datasql.write.mode("overwrite").option("compression", "snappy")\
         .parquet("hdfs://namenode:9000//EDL_Data/Trusted_Data_Zone/user")
